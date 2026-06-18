@@ -9,7 +9,7 @@ Réalisée par ANTON NELCON Steve
 
 <img width="1910" height="872" alt="image" src="https://github.com/user-attachments/assets/9101ad38-feab-4516-9e79-15945c406560" />
 
-
+Site accesible via ce lien: https://an-steve.github.io/Aura.IA/
 ---
 
 ##  Sommaire
