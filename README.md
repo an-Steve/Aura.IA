@@ -196,5 +196,3 @@ Dans `style.css`, modifiez les variables CSS du thème sombre ou clair :
 - **Pas de mode hors-ligne** — toutes les fonctionnalités nécessitent une connexion internet.
 
 ---
-
-*Projet open-source — libre de modification et de réutilisation.*
