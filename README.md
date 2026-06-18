@@ -1,7 +1,8 @@
 # ✦ Aura.AI
 
 Interface de chat IA générative multifonction — 100% gratuite, sans clé API, utilisable directement dans le navigateur.
-Réalisée par ANTON NELCON Steve
+
+→Réalisée par ANTON NELCON Steve
 
 ![HTML](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white)
 ![CSS](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white)
