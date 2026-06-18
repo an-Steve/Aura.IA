@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aura AI — Interface Intelligente</title>
+    <!-- Marked.js pour le rendu Markdown -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+    <!-- Highlight.js pour les blocs de code -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">AURA<span>.AI</span></div>
+                <button class="icon-btn" id="new-chat-btn" title="Nouvelle conversation">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                </button>
+            </div>
+            <div class="sidebar-section-label">Outils rapides</div>
+            <nav class="sidebar-nav">
+                <button class="nav-item active" data-mode="chat">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    Chat IA
+                </button>
+                <button class="nav-item" data-mode="image">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    Générateur d'images
+                </button>
+                <button class="nav-item" data-mode="weather">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+                    Météo
+                </button>
+                <button class="nav-item" data-mode="calc">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg>
+                    Calculatrice
+                </button>
+                <button class="nav-item" data-mode="joke">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                    Humour
+                </button>
+            </nav>
+
+            <div class="sidebar-section-label" style="margin-top: auto;">Historique</div>
+            <div class="history-list" id="history-list">
+                <span class="history-empty">Aucune conversation</span>
+            </div>
+
+            <div class="sidebar-footer">
+                <button class="icon-btn theme-toggle" id="theme-toggle" title="Changer le thème">
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    <span id="theme-label">Mode clair</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- ZONE PRINCIPALE -->
+        <main class="main-area">
+            <header class="top-bar">
+                <button class="icon-btn sidebar-toggle" id="sidebar-toggle" title="Menu">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                </button>
+                <div class="status-badge"><span class="pulse"></span> Système actif</div>
+                <div class="token-counter" id="token-counter">0 msg</div>
+            </header>
+
+            <div id="chat-container">
+                <!-- WELCOME -->
+                <div id="welcome-overlay" class="welcome-overlay">
+                    <div class="welcome-icon">✦</div>
+                    <h2>Bonjour, je suis <strong>Aura</strong></h2>
+                    <p class="welcome-sub">Votre assistant IA multifonction. Posez une question, générez une image, ou explorez les outils ci-dessous.</p>
+                    <div class="suggestions-grid">
+                        <div class="card" onclick="fillInput('Explique-moi le machine learning en 5 points')">
+                            <div class="card-icon">🧠</div>
+                            <h3>IA & Technologie</h3>
+                            <p>Explique le machine learning</p>
+                        </div>
+                        <div class="card" onclick="fillInput('Météo Lyon')">
+                            <div class="card-icon">🌤️</div>
+                            <h3>Météo en direct</h3>
+                            <p>Météo Lyon</p>
+                        </div>
+                        <div class="card" onclick="fillInput('Génère une image de forêt enchantée au coucher de soleil')">
+                            <div class="card-icon">🎨</div>
+                            <h3>Génération d'image</h3>
+                            <p>Forêt enchantée au coucher de soleil</p>
+                        </div>
+                        <div class="card" onclick="fillInput('Raconte-moi une blague de programmeur')">
+                            <div class="card-icon">🎭</div>
+                            <h3>Humour & Détente</h3>
+                            <p>Blague de programmeur</p>
+                        </div>
+                        <div class="card" onclick="fillInput('Calcule (145 * 32) / 4 + 78')">
+                            <div class="card-icon">🧮</div>
+                            <h3>Calculatrice</h3>
+                            <p>(145 * 32) / 4 + 78</p>
+                        </div>
+                        <div class="card" onclick="fillInput('Traduis en anglais : Bonjour, comment allez-vous ?')">
+                            <div class="card-icon">🌍</div>
+                            <h3>Traduction</h3>
+                            <p>Traduire du français vers l'anglais</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ZONE D'INPUT -->
+            <div id="input-area">
+                <div class="input-toolbar">
+                    <button class="tool-chip" onclick="fillInput('Génère une image de ')">🎨 Image</button>
+                    <button class="tool-chip" onclick="fillInput('Météo ')">🌤️ Météo</button>
+                    <button class="tool-chip" onclick="fillInput('Traduis en anglais : ')">🌍 Traduire</button>
+                    <button class="tool-chip" onclick="fillInput('Résume ce texte : ')">📝 Résumer</button>
+                </div>
+                <div class="input-wrapper" id="input-wrapper">
+                    <textarea id="user-input" placeholder="Demandez n'importe quoi à Aura..." rows="1"></textarea>
+                    <div class="input-actions">
+                        <button class="clear-btn icon-btn" id="clear-input" title="Effacer" style="display:none">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                        </button>
+                        <button id="send-btn" title="Envoyer (Entrée)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                        </button>
+                    </div>
+                </div>
+                <p class="input-hint">Entrée pour envoyer · Maj+Entrée pour un saut de ligne · <span id="char-count">0</span> car.</p>
+            </div>
+        </main>
+    </div>
+
+    <div id="toast-container"></div>
+    <script src="script.js"></script>
+</body>
+</html>
